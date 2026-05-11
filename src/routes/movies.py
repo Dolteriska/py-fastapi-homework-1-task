@@ -23,7 +23,7 @@ async def read_movies(
     total_pages = (total_items + per_page - 1) // per_page
 
     if page > total_pages:
-        raise HTTPException(status_code=404, detail="Page not found")
+        raise HTTPException(status_code=404, detail="No movies found.")
 
     offset = (page - 1) * per_page
 
