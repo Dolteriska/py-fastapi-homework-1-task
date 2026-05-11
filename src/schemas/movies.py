@@ -1,7 +1,6 @@
 import datetime
-from typing import Sequence, Optional
-from fastapi_pagination import Page as BasePage
-from pydantic import BaseModel, ConfigDict, Field, computed_field
+from typing import Optional, List
+from pydantic import BaseModel, ConfigDict
 
 
 class MovieBase(BaseModel):
@@ -31,25 +30,9 @@ class MovieDetailResponseSchema(MovieBase):
     model_config = ConfigDict(from_attributes=True)
 
 
-class CustomMoviePagination(BasePage[MovieListResponseSchema]):
-    movies: Sequence[MovieListResponseSchema] = Field(alias="items")
-    total_pages: int = Field(alias="pages")
-    total_items: int = Field(alias="total")
-
-    @computed_field
-    @property
-    def next_page(self) -> Optional[str]:
-        if self.page >= self.total_pages:
-            return None
-        return f"/api/v1/theater/movies/?page={self.page + 1}&per_page={self.size}"
-
-    @computed_field
-    @property
-    def prev_page(self) -> Optional[str]:
-        if self.page <= 1:
-            return None
-        return f"/api/v1/theater/movies/?page={self.page - 1}&per_page={self.size}"
-
-    model_config = {
-        "populate_by_name": True
-    }
+class CustomMoviePagination(BaseModel):
+    movies: List[MovieListResponseSchema]
+    prev_page: Optional[str]
+    next_page: Optional[str]
+    total_pages: int
+    total_items: int
