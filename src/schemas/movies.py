@@ -41,14 +41,14 @@ class CustomMoviePagination(BasePage[MovieListResponseSchema]):
     def next_page(self) -> Optional[str]:
         if self.page >= self.total_pages:
             return None
-        return f"/theater/movies/?page={self.page + 1}&per_page={self.size}"
+        return f"/api/v1/theater/movies/?page={self.page + 1}&per_page={self.size}"
 
     @computed_field
     @property
     def prev_page(self) -> Optional[str]:
         if self.page <= 1:
             return None
-        return f"/theater/movies/?page={self.page - 1}&per_page={self.size}"
+        return f"/api/v1/theater/movies/?page={self.page - 1}&per_page={self.size}"
 
     model_config = {
         "populate_by_name": True

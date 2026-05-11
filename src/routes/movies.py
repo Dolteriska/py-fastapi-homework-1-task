@@ -8,7 +8,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 router = APIRouter()
 
 
-@router.get("/movies", response_model=CustomMoviePagination)
+@router.get("/movies/", response_model=CustomMoviePagination)
 async def read_movies(
         page: int = Query(1, ge=1, description="The page number to fetch."),
         per_page: int = Query(10, ge=1, le=20, description="Number of movies per page."),
@@ -23,7 +23,7 @@ async def read_movies(
     return await paginate(db, select(MovieModel), params=params)
 
 
-@router.get("/movies/{movie_id}", response_model=MovieDetailResponseSchema)
+@router.get("/movies/{movie_id}/", response_model=MovieDetailResponseSchema)
 async def read_movie(movie_id: int, db: AsyncSession = Depends(get_db)):
     query = select(MovieModel).where(MovieModel.id == movie_id)
     movie = await db.scalar(query)
