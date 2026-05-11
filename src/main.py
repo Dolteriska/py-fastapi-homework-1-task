@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, status
-from fastapi_pagination import Page, add_pagination, paginate
 from database import init_db, close_db
 from routes import movie_router
 from fastapi.exceptions import RequestValidationError
