@@ -7,6 +7,7 @@ from routes import movie_router
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
