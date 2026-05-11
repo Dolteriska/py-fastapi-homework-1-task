@@ -21,6 +21,10 @@ async def read_movies(
         raise HTTPException(status_code=404, detail="No movies found.")
 
     total_pages = (total_items + per_page - 1) // per_page
+
+    if page > total_pages:
+        raise HTTPException(status_code=404, detail="Page not found")
+
     offset = (page - 1) * per_page
 
     movie_query = select(MovieModel).offset(offset).limit(per_page)
